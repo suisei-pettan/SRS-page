@@ -15,9 +15,16 @@
 <a>以帮助我改善线路</a>
 <a>如显示手机不支持，请使用 电脑版页面/查看桌面网站</a>
 <script>
+const getUrlParam = function(name) {
+	let url = window.location.search.substr(1);
+	let reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
+	let result = url.match(reg);
+	return result ? decodeURIComponent(result[2]) : null;
+}; // 保存 channel 参数值 
+const channel = getUrlParam('channel');
 var player = new Aliplayer({
   "id": "player-con",
-  "source": "https://test.xn--ujqyjt8y32c5tfri2791a.xyz:2053/live/homo.flv",
+  "source": "https://yagoo2.xn--ujqyjt8y32c5tfri2791a.xyz:2053/live/homo"+channel+".flv",
   "width": "100%",
   "height": "500px",
   "autoplay": true,

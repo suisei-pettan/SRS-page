@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+		/>
+		<title>
+			视频转播测试
+		</title>
+		<link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.15.2/skins/default/aliplayer-min.css"
+		/>
+		<script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/de/prismplayer/2.15.2/aliplayer-min.js">
+		</script>
+		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+		<link rel="stylesheet" href="style.min.css" />
+		<script src="CommentCoreLibrary.js">
+		</script>
+		<script src="socket.io.js">
+		</script>
+	</head>
+	<body>
+	    <div id='my-player' class='abp' style="height:800px">
+	        <div id='my-comment-stage' class='container' style="height:800px">
+	            
+		        <div class="prism-player" id="playercon"></div>
+	        </div>
+        </div>
+		<a>
+			希望各位频友能参与
+		</a>
+		<a href="https://www.wjx.cn/vm/Q05BhlI.aspx">
+			问卷调查
+		</a>
+		<a>
+			以帮助我改善线路
+		</a>
+		<a>
+			如显示手机不支持，请使用 电脑版页面/查看桌面网站
+		</a>
+		<button id="send-danmaku-btn">
+			发送弹幕
+		</button>
+		<input id="send-danmaku-field" />
+		<script src="https://code.jquery.com/jquery-3.6.4.min.js">
+		</script>
+		<script>
+			const getUrlParam = function(name) {
+    let url = window.location.search.substr(1);
+    let reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
+    let result = url.match(reg);
+    return result ? decodeURIComponent(result[2]) : null;
+}; // 保存 channel 参数值 
+const channel = getUrlParam('channel');
+var player = new Aliplayer({
+    "id": "playercon",
+    "source": "https://yagoo2.xn--ujqyjt8y32c5tfri2791a.xyz:2053/live/homo" + channel + ".flv",
+    "width": "100%",
+    "height": "500px",
+    "autoplay": true,
+    "isLive": true,
+    "rePlay": false,
+    "playsinline": true,
+    "preload": true,
+    "enableStashBufferForFlv": true,
+    "stashInitialSizeForFlv": 32,
+    "controlBarVisibility": "hover",
+    "useH5Prism": true
+}, function(player) {
+    console.log("The player is created");
+});
+var CM = new CommentManager(document.getElementById('my-comment-stage'));
+CM.init(); // 初始化
+// Polling example code
+// Push notify example code
+// 基于 socket.io 和 JQuery来简化代码
+
+const socket = io('https://yagoo2.xn--ujqyjt8y32c5tfri2791a.xyz:2083/'); //开启流
+  console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+  socket.on('danmaku', (data) =>{
+    // 当遇到 danmaku 事件，就把推送来的弹幕推送给 CCL
+    var danmaku = JSON.parse(data);
+    console.log(data);
+    if (danmaku.hasOwnProperty('stime')) {
+        // 弹幕有时间轴位置，那就插入时间轴
+        CM.insert(danmaku);
+    } else {
+        // 弹幕没有时间轴位置就立刻显示（不记录）
+        CM.send(danmaku);
+    }
+    CM.start();
+});
+
+$('#send-danmaku-btn').click(function(){
+    //当按了发送弹幕的按钮
+    var data = {
+        "text": $('#send-danmaku-field').val(),
+        "stime": playercon.currentTime,
+        "mode": 1,
+        "size": 25,
+        "color": 0x000000
+    };// 通过UI获取新弹幕的信息
+
+    //包装并发射弹幕
+    socket.emit('danmaku', JSON.stringify(data));
+
+    //清除 UI 文字部分
+    $('#send-danmaku-field').val("");
+});
+socket.on("hello", (arg) => {
+  console.log(arg); // world
+});
+		</script>
+	</body>

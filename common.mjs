@@ -15,7 +15,8 @@ const io = new Server(httpServer, { /* options */
 
 io.on("connection", (socket) => {
   socket.on("danmaku", (arg) => {
-    var pattern = /.*(吹雪|笨蛋).*/;
+    var pattern = /.*(吹雪|笨蛋).*/,
+	string = '';
     var danma = JSON.parse(arg);
     if(pattern.test(danma.text)){
 	console.log（pattern.test（danma.text））;

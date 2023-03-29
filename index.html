@@ -100,11 +100,12 @@ $('#send-danmaku-btn').click(function(){
         "stime": playercon.currentTime,
         "mode": 1,
         "size": 25,
-        "color": 0xFFFFFF
+        "color": 0xFFFFFF,
+        "ch": channel
     };// 通过UI获取新弹幕的信息
 
     //包装并发射弹幕
-    socket.emit('danmaku'+ channel, JSON.stringify(data));
+    socket.emit('danmaku', JSON.stringify(data));
 
     //清除 UI 文字部分
     $('#send-danmaku-field').val("");

@@ -15,9 +15,15 @@ const io = new Server(httpServer, { /* options */
 
 io.on("connection", (socket) => {
   socket.on("danmaku", (arg) => {
+    var pattern = /.*(吹雪|笨蛋).*/,
+	string = '';
+console.log(pattern.test(string));
     var danma = JSON.parse(arg);
+    if(pattern.test(danma.text)){
+    }else{
     var channel=danma.ch;
     io.emit("danmaku"+channel, arg);
+    }
   });
 });
 

@@ -17,10 +17,11 @@ io.on("connection", (socket) => {
   socket.on("danmaku", (arg) => {
     var pattern = /.*(吹雪|笨蛋).*/,
 	string = '';
-console.log(pattern.test(string));
     var danma = JSON.parse(arg);
     if(pattern.test(danma.text)){
+	console.log（pattern.test（danma.text））;
     }else{
+	console.log（danma.text）;
     var channel=danma.ch;
     io.emit("danmaku"+channel, arg);
     }

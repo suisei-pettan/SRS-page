@@ -25,7 +25,7 @@
 	                <div id='my-comment-stage' class='container' style="width: 100%; height: 500px;z-index:1">
 		        </div>
 	        </div>
-	        <div style="bottom:0;z-index:999;position:absolute">
+	        <div style="bottom:0;z-index:999;position:absolute" id="danmaku_send">
 		<button id="send-danmaku-btn">
 			发送弹幕
 		</button>
@@ -121,5 +121,29 @@ if (element.requestFullscreen) {
 } else if (element.msRequestFullscreen) { /* IE11 */
   element.msRequestFullscreen();
 }
+//点击时显示发送弹幕10秒
+    $("#danmaku_send").hide();
+    var inputFocused = false;
+    $("#send-danmaku-field").focus(function(){
+        inputFocused = true;
+    });
+    $("#send-danmaku-field").blur(function(){
+        inputFocused = false;
+        setTimeout(function(){
+            if(!inputFocused){
+                $("#danmaku_send").hide();
+            }
+        }, 10000);
+    });
+    $(document).click(function(){
+        if(!inputFocused){
+            $("#danmaku_send").show();
+            setTimeout(function(){
+                if(!inputFocused){
+                    $("#danmaku_send").hide();
+                }
+            }, 10000);
+        }
+    });
 		</script>
 	</body>

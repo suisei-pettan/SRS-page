@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html style="background-color: #333333;">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="x-ua-compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
 		/>
 		<title>
-			视频转播测试
+			彗酱今天也很可爱
 		</title>
 		<link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.15.2/skins/default/aliplayer-min.css"
 		/>
@@ -19,10 +19,50 @@
 		<script src="socket.io.min.js">
 		</script>
 	</head>
-	<body>
-		        <div class="prism-player" id="playercon">
-	                <div id='my-player' class='abp' style="width: 100%; height: 500px;z-index:1">
-	                <div id='my-comment-stage' class='container' style="width: 100%; height: 500px;z-index:1">
+<style>
+  .prism-player {
+    margin: 0 auto;
+    max-width: 800px;
+    background-color: #333333;
+  }
+
+  #my-player {
+    border: none;
+  }
+
+  #danmaku_send {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #send-danmaku-btn {
+    margin-right: 10px;
+    background-color: #cc0099;
+    color: white;
+    border-radius: 10px;
+    padding: 5px 10px;
+    border: none;
+  }
+
+  #send-danmaku-field {
+    width: 300px;
+    border: none;
+    padding: 5px;
+    border-radius: 10px;
+  }
+
+  a {
+    display: block;
+    text-align: center;
+    margin: 10px;
+    color: #ccccff;
+    text-decoration: none;
+  }
+</style>	<body>
+		        <div class="prism-player" id="playercon" style="border-radius: 10px;">
+	                <div id='my-player' class='abp' style="width: 100%; height: 500px;z-index:1;border-radius: 10px;">
+	                <div id='my-comment-stage' class='container' style="width: 100%; height: 500px;z-index:1;border-radius: 10px;">
 		        </div>
 	        </div>
 	        <div style="bottom:0;z-index:999;position:absolute" id="danmaku_send">
@@ -32,7 +72,7 @@
 		<input id="send-danmaku-field" /></div>
         </div>
 		<a>
-			点击页面即可显示弹幕发送。希望各位频友能参与
+			弹幕功能正在进行"升级更新"，暂停使用
 		</a>
 		<a href="https://www.wjx.cn/vm/mznTzz0.aspx">
 			问卷调查
@@ -49,7 +89,7 @@
 		<script src="https://code.jquery.com/jquery-3.6.4.min.js">
 		</script>
 		<script>
-			const getUrlParam = function(name) {
+	const getUrlParam = function(name) {
     let url = window.location.search.substr(1);
     let reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
     let result = url.match(reg);
@@ -58,7 +98,7 @@
 const channel = getUrlParam('channel');
 var player = new Aliplayer({
     "id": "playercon",
-    "source": "https://yagoo2.xn--ujqyjt8y32c5tfri2791a.xyz:2053/live/homo" + channel + ".flv",
+    "source": "https://yagoo.xn--ujqyjt8y32c5tfri2791a.xyz:2053/live/homo" + channel + ".flv",
     "width": "100%",
     "height": "500px",
     "autoplay": true,
@@ -79,7 +119,7 @@ CM.init(); // 初始化
 // Push notify example code
 // 基于 socket.io 和 JQuery来简化代码
 
-const socket = io('https://yagoo2.xn--ujqyjt8y32c5tfri2791a.xyz:2083/'); //开启流
+const socket = io('https://yagoo.xn--ujqyjt8y32c5tfri2791a.xyz:2083/'); //开启流
   console.log(socket.id); // x8WIv7-mJelg7on_ALbx
   socket.on('danmaku'+ channel, (data) =>{
     // 当遇到 danmaku 事件，就把推送来的弹幕推送给 CCL

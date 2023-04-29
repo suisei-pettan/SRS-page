@@ -1,191 +1,207 @@
 <!DOCTYPE html>
 <html style="background-color: #333333;">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="x-ua-compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
-		/>
-		<title>
-			彗酱今天也很可爱
-		</title>
-		<link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.15.2/skins/default/aliplayer-min.css"
-		/>
-		<script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/de/prismplayer/2.15.2/aliplayer-min.js">
-		</script>
-		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-		<link rel="stylesheet" href="style.min.css" />
-		<script src="CommentCoreLibrary.min.js">
-		</script>
-		<script src="socket.io.min.js">
-		</script>
-	</head>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <title>
+        彗酱今天也很可爱
+    </title>
+    <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.15.2/skins/default/aliplayer-min.css"
+    />
+    <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/de/prismplayer/2.15.2/aliplayer-min.js">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="style.min.css"/>
+    <script src="CommentCoreLibrary.min.js">
+    </script>
+    <script src="socket.io.min.js">
+    </script>
+</head>
 <style>
-  .prism-player {
-    margin: 0 auto;
-    max-width: 800px;
-    background-color: #333333;
-  }
-
-  #my-player {
-    border: none;
-  }
-
-  #danmaku_send {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  #send-danmaku-btn {
-    margin-right: 10px;
-    background-color: #cc0099;
-    color: white;
-    border-radius: 10px;
-    padding: 5px 10px;
-    border: none;
-  }
-
-  #send-danmaku-field {
-    width: 300px;
-    border: none;
-    padding: 5px;
-    border-radius: 10px;
-  }
-
-  a {
-    display: block;
-    text-align: center;
-    margin: 10px;
-    color: #ccccff;
-    text-decoration: none;
-  }
-</style>	<body>
-		        <div class="prism-player" id="playercon" style="border-radius: 10px;">
-	                <div id='my-player' class='abp' style="width: 100%; height: 500px;z-index:1;border-radius: 10px;">
-	                <div id='my-comment-stage' class='container' style="width: 100%; height: 500px;z-index:1;border-radius: 10px;">
-		        </div>
-	        </div>
-	        <div style="bottom:0;z-index:999;position:absolute" id="danmaku_send">
-		<button id="send-danmaku-btn">
-			发送弹幕
-		</button>
-		<input id="send-danmaku-field" /></div>
-        </div>
-		<a>
-			弹幕功能正在进行"升级更新"，暂停使用
-		</a>
-		<a href="https://www.wjx.cn/vm/mznTzz0.aspx">
-			问卷调查
-		</a>
-		<a>
-			以帮助我改善线路
-		</a>
-		<a>
-			如显示手机不支持，请使用 电脑版页面/查看桌面网站。
-		</a>
-		<br/>
-		<a style="color:red;font-weight:bold;">已知ipv6有卡顿现象，请避免在开启ipv6的情况下观看。部分校园网可能会劫持DNS阻碍访问，请打开安全DNS解决</a>
-		
-		<script src="https://code.jquery.com/jquery-3.6.4.min.js">
-		</script>
-		<script>
-	const getUrlParam = function(name) {
-    let url = window.location.search.substr(1);
-    let reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
-    let result = url.match(reg);
-    return result ? decodeURIComponent(result[2]) : null;
-}; // 保存 channel 参数值 
-const channel = getUrlParam('channel');
-var player = new Aliplayer({
-    "id": "playercon",
-    "source": "https://yagoo.xn--ujqyjt8y32c5tfri2791a.xyz:2053/live/homo" + channel + ".flv",
-    "width": "100%",
-    "height": "500px",
-    "autoplay": true,
-    "isLive": true,
-    "rePlay": false,
-    "playsinline": true,
-    "preload": true,
-    "enableStashBufferForFlv": true,
-    "stashInitialSizeForFlv": 32,
-    "controlBarVisibility": "hover",
-    "useH5Prism": true
-}, function(player) {
-    console.log("The player is created");
-});
-var CM = new CommentManager(document.getElementById('my-comment-stage'));
-CM.init(); // 初始化
-// Polling example code
-// Push notify example code
-// 基于 socket.io 和 JQuery来简化代码
-
-const socket = io('https://yagoo.xn--ujqyjt8y32c5tfri2791a.xyz:2083/'); //开启流
-  console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-  socket.on('danmaku'+ channel, (data) =>{
-    // 当遇到 danmaku 事件，就把推送来的弹幕推送给 CCL
-    var danmaku = JSON.parse(data);
-    console.log(data);
-    if (danmaku.hasOwnProperty('stime')) {
-        // 弹幕有时间轴位置，那就插入时间轴
-        CM.insert(danmaku);
-    } else {
-        // 弹幕没有时间轴位置就立刻显示（不记录）
-        CM.send(danmaku);
+    .prism-player {
+        margin: 0 auto;
+        max-width: 800px;
+        background-color: #333333;
     }
-    CM.start();
-});
 
-$('#send-danmaku-btn').click(function(){
-    //当按了发送弹幕的按钮
-    var data = {
-        "text": $('#send-danmaku-field').val(),
-        "stime": playercon.currentTime,
-        "mode": 1,
-        "size": 25,
-        "color": 0xFFFFFF,
-        "ch": channel
-    };// 通过UI获取新弹幕的信息
+    #my-player {
+        border: none;
+    }
 
-    //包装并发射弹幕
-    socket.emit('danmaku', JSON.stringify(data));
+    #danmaku_send {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-    //清除 UI 文字部分
-    $('#send-danmaku-field').val("");
-});
-socket.on("hello", (arg) => {
-  console.log(arg); // world
-});
-const element = document.getElementById("my-comment-stage");
-if (element.requestFullscreen) {
-  element.requestFullscreen();
-} else if (element.webkitRequestFullscreen) { /* Safari */
-  element.webkitRequestFullscreen();
-} else if (element.msRequestFullscreen) { /* IE11 */
-  element.msRequestFullscreen();
-}
-//点击时显示发送弹幕10秒
+    #send-danmaku-btn {
+        margin-right: 10px;
+        background-color: #cc0099;
+        color: white;
+        border-radius: 10px;
+        padding: 5px 10px;
+        border: none;
+    }
+
+    #send-danmaku-field {
+        width: 300px;
+        border: none;
+        padding: 5px;
+        border-radius: 10px;
+    }
+
+    a {
+        display: block;
+        text-align: center;
+        margin: 10px;
+        color: #ccccff;
+        text-decoration: none;
+    }
+</style>
+<body>
+<div class="prism-player" id="playercon" style="border-radius: 10px;">
+    <div id='my-player' class='abp' style="width: 100%; height: 500px;z-index:1;border-radius: 10px;">
+        <div id='my-comment-stage' class='container' style="width: 100%; height: 500px;z-index:1;border-radius: 10px;">
+        </div>
+    </div>
+    <div style="bottom:0;z-index:999;position:absolute" id="danmaku_send">
+        <button id="send-danmaku-btn">
+            发送弹幕
+        </button>
+        <input id="send-danmaku-field"/></div>
+</div>
+<a>
+    弹幕功能正在进行"升级更新"，暂停使用
+</a>
+<a href="https://www.wjx.cn/vm/mznTzz0.aspx">
+    问卷调查
+</a>
+<a>
+    以帮助我改善线路
+</a>
+<a>
+    如显示手机不支持，请使用 电脑版页面/查看桌面网站。
+</a>
+<br/>
+<a style="color:red;font-weight:bold;">已知ipv6有卡顿现象，请避免在开启ipv6的情况下观看。部分校园网可能会劫持DNS阻碍访问，请打开安全DNS解决</a>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js">
+</script>
+<script>
+    //获取直播地址，存入myUrl
+    var xmlhttp = new XMLHttpRequest();
+    var myUrl = "srs.json";
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var myObj = JSON.parse(this.responseText);
+            var myUrl = myObj.url;
+            console.log(myUrl);
+        }
+    };
+    xmlhttp.open("GET", myUrl, true);
+    xmlhttp.send();
+
+    const getUrlParam = function (name) {
+        let url = window.location.search.substr(1);
+        let reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
+        let result = url.match(reg);
+        return result ? decodeURIComponent(result[2]) : null;
+    }; // 保存 channel 参数值
+    const channel = getUrlParam('channel');
+    var player = new Aliplayer({
+        "id": "playercon",
+        "source": myUrl + channel + ".flv",
+        "width": "100%",
+        "height": "500px",
+        "autoplay": true,
+        "isLive": true,
+        "rePlay": false,
+        "playsinline": true,
+        "preload": true,
+        "enableStashBufferForFlv": true,
+        "stashInitialSizeForFlv": 32,
+        "controlBarVisibility": "hover",
+        "useH5Prism": true
+    }, function (player) {
+        console.log("The player is created");
+    });
+    var CM = new CommentManager(document.getElementById('my-comment-stage'));
+    CM.init(); // 初始化
+    // Polling example code
+    // Push notify example code
+    // 基于 socket.io 和 JQuery来简化代码
+
+    const socket = io('https://yagoo.xn--ujqyjt8y32c5tfri2791a.xyz:2083/'); //开启流
+    console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    socket.on('danmaku' + channel, (data) => {
+        // 当遇到 danmaku 事件，就把推送来的弹幕推送给 CCL
+        var danmaku = JSON.parse(data);
+        console.log(data);
+        if (danmaku.hasOwnProperty('stime')) {
+            // 弹幕有时间轴位置，那就插入时间轴
+            CM.insert(danmaku);
+        } else {
+            // 弹幕没有时间轴位置就立刻显示（不记录）
+            CM.send(danmaku);
+        }
+        CM.start();
+    });
+
+    $('#send-danmaku-btn').click(function () {
+        //当按了发送弹幕的按钮
+        var data = {
+            "text": $('#send-danmaku-field').val(),
+            "stime": playercon.currentTime,
+            "mode": 1,
+            "size": 25,
+            "color": 0xFFFFFF,
+            "ch": channel
+        };// 通过UI获取新弹幕的信息
+
+        //包装并发射弹幕
+        socket.emit('danmaku', JSON.stringify(data));
+
+        //清除 UI 文字部分
+        $('#send-danmaku-field').val("");
+    });
+    socket.on("hello", (arg) => {
+        console.log(arg); // world
+    });
+    const element = document.getElementById("my-comment-stage");
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.webkitRequestFullscreen) { /* Safari */
+        element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) { /* IE11 */
+        element.msRequestFullscreen();
+    }
+    //点击时显示发送弹幕10秒
     $("#danmaku_send").hide();
     var inputFocused = false;
-    $("#send-danmaku-field").focus(function(){
+    $("#send-danmaku-field").focus(function () {
         inputFocused = true;
     });
-    $("#send-danmaku-field").blur(function(){
+    $("#send-danmaku-field").blur(function () {
         inputFocused = false;
-        setTimeout(function(){
-            if(!inputFocused){
+        setTimeout(function () {
+            if (!inputFocused) {
                 $("#danmaku_send").hide();
             }
         }, 10000);
     });
-    $(document).click(function(){
-        if(!inputFocused){
+    $(document).click(function () {
+        if (!inputFocused) {
             $("#danmaku_send").show();
-            setTimeout(function(){
-                if(!inputFocused){
+            setTimeout(function () {
+                if (!inputFocused) {
                     $("#danmaku_send").hide();
                 }
             }, 10000);
         }
     });
-		</script>
-	</body>
+</script>
+</body>

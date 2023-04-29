@@ -60,6 +60,15 @@
         color: #ccccff;
         text-decoration: none;
     }
+
+    .prism-ErrorMessage {
+        border-radius: 10px;
+        border-radius: 10px;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        display: block;
+    }
 </style>
 <body>
 <div class="prism-player" id="playercon" style="border-radius: 10px;">
@@ -95,7 +104,7 @@
     var xmlhttp = new XMLHttpRequest();
     var myUrl = "srs.json";
 
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var myObj = JSON.parse(this.responseText);
             var myUrl = myObj.url;

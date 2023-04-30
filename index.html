@@ -100,19 +100,9 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js">
 </script>
 <script>
-    //获取直播地址，存入myUrl
-    var xmlhttp = new XMLHttpRequest();
-    var myUrl = "srs.json";
-    window.myUrl1;
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var myObj = JSON.parse(this.responseText);
-            window.myUrl1 = myObj.url;
-        }
-    };
-    xmlhttp.open("GET", myUrl, true);
-    xmlhttp.send();
-    console.log(window.myUrl1);
+    //写入推流源
+    var myUrl = "https://yagoo2.xn--ujqyjt8y32c5tfri2791a.xyz:2053/live/homo";
+
     const getUrlParam = function (name) {
         let url = window.location.search.substr(1);
         let reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);
@@ -122,7 +112,7 @@
     const channel = getUrlParam('channel');
     var player = new Aliplayer({
         "id": "playercon",
-        "source": myUrl1 + channel + ".flv",
+        "source": myUrl + channel + ".flv",
         "width": "100%",
         "height": "500px",
         "autoplay": true,

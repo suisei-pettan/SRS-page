@@ -103,17 +103,16 @@
     //获取直播地址，存入myUrl
     var xmlhttp = new XMLHttpRequest();
     var myUrl = "srs.json";
-
+    var myUrl1;
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var myObj = JSON.parse(this.responseText);
-            var myUrl1 = myObj.url;
-            console.log(myUrl1);
+            myUrl1 = myObj.url;
         }
     };
     xmlhttp.open("GET", myUrl, true);
     xmlhttp.send();
-
+    console.log(myUrl1);
     const getUrlParam = function (name) {
         let url = window.location.search.substr(1);
         let reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`);

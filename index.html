@@ -72,7 +72,7 @@
     }
 </style>
 <body>
-    <img src="page.ico" alt="logo" style="position: absolute; top: 0; left: 0; margin: 20px;height: 50px;">
+<img src="page.ico" alt="logo" style="position: absolute; top: 0; left: 0; margin: 20px;height: 50px;">
 <div class="prism-player" id="playercon" style="border-radius: 10px;">
     <div id='my-player' class='abp' style="width: 100%; height: 500px;z-index:1;border-radius: 10px;">
         <div id='my-comment-stage' class='container' style="width: 100%; height: 500px;z-index:1;border-radius: 10px;">
@@ -84,14 +84,8 @@
         </button>
         <input id="send-danmaku-field" disabled hidden/></div>
 </div>
-<a>
-    弹幕功能"由于技术原因"暂时无法使用，暂停使用
-</a>
 <a href="https://www.wjx.cn/vm/mznTzz0.aspx">
-    问卷调查
-</a>
-<a>
-    以帮助我改善线路
+    填写问卷调查以帮助我改善线路
 </a>
 <a>
     如显示手机不支持，请使用 电脑版页面/查看桌面网站。
@@ -103,7 +97,7 @@
 </script>
 <script>
     //写入推流源
-    var myUrl = "https://yagoo2.xn--ujqyjt8y32c5tfri2791a.xyz:2053/live/homo";
+    // var myUrl = "https://yagoo2.xn--ujqyjt8y32c5tfri2791a.xyz:2053/live/homo";
 
     const getUrlParam = function (name) {
         let url = window.location.search.substr(1);
@@ -114,7 +108,7 @@
     const channel = getUrlParam('channel');
     var player = new Aliplayer({
         "id": "playercon",
-        "source": myUrl + channel + ".flv",
+        "source": env.LIVESTREAMURL + channel + ".flv",
         "width": "100%",
         "height": "500px",
         "autoplay": true,

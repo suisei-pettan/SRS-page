@@ -97,7 +97,7 @@
 </script>
 <script>
     //写入推流源
-    // var myUrl = "https://yagoo2.xn--ujqyjt8y32c5tfri2791a.xyz:2053/live/homo";
+    var myUrl = "https://yagoo2.xn--ujqyjt8y32c5tfri2791a.xyz:2053/live/homo";
 
     const getUrlParam = function (name) {
         let url = window.location.search.substr(1);
@@ -108,7 +108,7 @@
     const channel = getUrlParam('channel');
     var player = new Aliplayer({
         "id": "playercon",
-        "source": env.LIVESTREAMURL + channel + ".flv",
+        "source": myUrl + channel + ".flv",
         "width": "100%",
         "height": "500px",
         "autoplay": true,

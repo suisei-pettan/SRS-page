@@ -17,7 +17,10 @@ npm install socket.io
 npm install ytdl-patched
 pip install python
 ```
-
+## 一键部署
+```
+sudo wget https://raw.githubusercontent.com/suisei-pettan/SRS-page/main/setup.sh -O - | sudo bash
+```
 ## 启动Docker
 
 要启动SRS服务器，你需要使用Docker来运行一个容器。你可以使用以下命令来启动Docker：

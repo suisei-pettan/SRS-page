@@ -113,30 +113,9 @@
     // 存储后端地址到变量中
     if (backendUrl) {
         // 如果参数存在，则将其存储到变量中
-        myUrl = caesarDecrypt(backendUrl, 6); + "/live/homo";
+        myUrl = backendUrl + "/live/homo";
     } else {
         alert("后端为空,请检查url参数是否完整");
-    }
-
-    function caesarDecrypt(ciphertext, shift) {
-        let decryptedText = "";
-        for (let i = 0; i < ciphertext.length; i++) {
-            let char = ciphertext[i];
-            if (char.match(/[a-zA-Z]/)) {
-                // 判断字符是否为字母
-                let code = char.charCodeAt(0);
-                let base = code >= 97 ? 97 : 65;
-                // 根据字符的大小写确定基准值（97对应小写字母'a'的Unicode码，65对应大写字母'A'的Unicode码）
-                let decryptedCode = ((code - base - shift + 26) % 26) + base;
-                // 进行解密操作，根据基准值和位移数计算解密后的Unicode码
-                char = String.fromCharCode(decryptedCode);
-                // 将解密后的Unicode码转换为字符
-            }
-            decryptedText += char;
-            // 将解密后的字符添加到解密后的字符串中
-        }
-        return decryptedText;
-        // 返回解密后的明文
     }
 
     const getUrlParam = function (name) {

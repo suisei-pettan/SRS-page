@@ -102,7 +102,21 @@
 </script>
 <script>
     //写入推流源
-    var myUrl = "https://yagoo2.xn--ujqyjt8y32c5tfri2791a.xyz:2053/live/homo";
+    var myUrl;
+
+    // 获取 URL 中的参数
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // 从 URL 中获取后端地址参数
+    const backendUrl = urlParams.get('backendUrl');
+
+    // 存储后端地址到变量中
+    if (backendUrl) {
+        // 如果参数存在，则将其存储到变量中
+        myUrl = backendUrl + "/live/homo";
+    } else {
+        alert("后端为空,请检查url参数是否完整");
+    }
 
     const getUrlParam = function (name) {
         let url = window.location.search.substr(1);

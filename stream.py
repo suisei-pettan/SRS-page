@@ -25,8 +25,8 @@ def main():
         print("FFmpeg is still running. SuperVisord process will not be stopped.")
     else:
         # 如果ffmpeg进程已退出，则停止与其channel_number相同名称的SuperVisord进程
-        supervisor_process_name = f"SuperVisord_{channel_number}"
-        stop_supervisor_command = f"supervisorctl stop {supervisor_process_name}"
+        stop_supervisor_command = f"supervisorctl stop {channel_number}"
+        print("退出保活")
         subprocess.run(stop_supervisor_command, shell=True)
 
 if __name__ == "__main__":

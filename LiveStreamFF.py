@@ -58,8 +58,8 @@ if __name__ == '__main__':
             if process is None or process.poll() is not None:  # 如果 ffmpeg 进程未运行或已停止运行
                 process = start_pushing(live_source)
             else:
-                print("ffmpeg 进程正在运行，等待 5 分钟后重试...")
-                time.sleep(300)
+                print("ffmpeg 进程正在运行，等待 1 分钟后重试...")
+                time.sleep(60)
         else:
             print("没有找到具有 'live_tl_count' 键的直播信息，等待 5 分钟后重试...")
             time.sleep(300)

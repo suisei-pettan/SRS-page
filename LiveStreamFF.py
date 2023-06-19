@@ -64,5 +64,10 @@ if __name__ == '__main__':
             print("没有找到具有 'live_tl_count' 键的直播信息，等待 5 分钟后重试...")
             time.sleep(300)
 
-    # 程序不会运行到这里，因为循环是无限的
-    print("ffmpeg进程已退出。")
+        if process and process.poll() is not None:  # 如果 ffmpeg 进程退出
+            print("ffmpeg 进程已退出，执行特定命令...")
+            special_command = "ffmpeg -re -stream_loop 8 -i https://github.com/suisei-pettan/SRS-page/raw/main/pause.mp4 -c:v copy -strict -2 -f flv '{push_url}/{push_key}'"
+            subprocess.run(special_command, shell=True)
+            process = None  # 重置 ffmpeg 进程
+
+    print("程序结束。")

@@ -6,12 +6,12 @@ sudo chmod a+rx /usr/local/bin/ytdl-patched
 
 # 检查是否安装了pip
 command -v pip >/dev/null 2>&1 || {
-    echo "请确保已安装pip。"
+    echo "请确保已安装pip3。"
     exit 1
 }
 
 # 安装requests库
-pip install requests
+pip3 install requests
 
 # 安装ffmpeg工具
 apt-get update

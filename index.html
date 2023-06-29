@@ -78,11 +78,11 @@
         <div id='my-comment-stage' class='container' style="width: 100%; height: 500px;z-index:1;border-radius: 10px;">
         </div>
     </div>
-    <div style="bottom:0;z-index:999;position:absolute" id="danmaku_send" hidden>
-        <button id="send-danmaku-btn" disabled hidden>
-            “系统升级”
+    <div style="bottom:0;z-index:999;position:absolute" id="danmaku_send">
+        <button id="send-danmaku-btn">
+            “发生弹幕”
         </button>
-        <input id="send-danmaku-field" disabled hidden/></div>
+        <input id="send-danmaku-field"/></div>
 </div>
 <a href="https://www.wjx.cn/vm/mznTzz0.aspx">
     填写问卷调查以帮助我改善线路
@@ -202,16 +202,16 @@
         inputFocused = false;
         setTimeout(function () {
             if (!inputFocused) {
-                // $("#danmaku_send").hide();
+                $("#danmaku_send").hide();
             }
         }, 10000);
     });
     $(document).click(function () {
         if (!inputFocused) {
-            // $("#danmaku_send").show();
+            $("#danmaku_send").show();
             setTimeout(function () {
                 if (!inputFocused) {
-                    // $("#danmaku_send").hide();
+                    $("#danmaku_send").hide();
                 }
             }, 10000);
         }

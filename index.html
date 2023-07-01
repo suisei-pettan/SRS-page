@@ -185,6 +185,8 @@
         }
     }
 
+    Socket();
+
     // 关闭连接
     function closeSocket() {
         if (socket) {
@@ -195,7 +197,8 @@
             console.log('Socket.IO连接已经关闭');
         }
     }
-    function Socket(){
+
+    function Socket() {
         console.log(socket.id); // x8WIv7-mJelg7on_ALbx
         socket.on('danmaku' + channel, (data) => {
             // 当遇到 danmaku 事件，就把推送来的弹幕推送给 CCL

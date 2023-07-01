@@ -87,11 +87,11 @@
             <input type="checkbox" id="toggleSwitch" checked onchange="toggleSocket()">
             <span class="slider"></span>
         </label>
-        <span class="switch-label">连接状态: <span id="status">关闭</span></span>
+        <span class="switch-label">连接状态: <span id="status">打开</span></span>
     </div>
 </div>
-<a>
-    本站主要用于提供高码率的直播转播，不保证中国大陆方向网络质量，弹幕已开放，
+<a href="https://www.wjx.cn/vm/mznTzz0.aspx">
+    填写问卷调查以帮助我改善线路
 </a>
 <a>
     如显示手机不支持，请使用 电脑版页面/查看桌面网站。
@@ -103,46 +103,7 @@
 <a>
     过来人劝你不要在b站看v，会变得不幸
 </a>
-<script>
-    function toggleSocket() {
-        var toggleSwitch = document.getElementById('toggleSwitch');
-        var status = document.getElementById('status');
 
-        if (toggleSwitch.checked) {
-            // 打开连接
-            openSocket();
-            status.textContent = '打开';
-        } else {
-            // 关闭连接
-            closeSocket();
-            status.textContent = '关闭';
-        }
-    }
-
-    // 创建一个socket变量用于存储Socket.IO连接
-    let socket = null;
-
-    // 打开连接
-    function openSocket() {
-        if (!socket) {
-            socket = io(backendUrl + ':2083/');
-            console.log('Socket.IO连接已打开');
-        } else {
-            console.log('Socket.IO连接已经打开');
-        }
-    }
-
-    // 关闭连接
-    function closeSocket() {
-        if (socket) {
-            socket.disconnect();
-            socket = null;
-            console.log('Socket.IO连接已关闭');
-        } else {
-            console.log('Socket.IO连接已经关闭');
-        }
-    }
-</script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js">
 </script>
 <script>
@@ -193,9 +154,47 @@
     // Push notify example code
     // 基于 socket.io 和 JQuery来简化代码
 
-    // const socket = io(backendUrl + ':2083/'); //开启流
-    // 创建一个socket变量用于存储Socket.IO连接
+    const socket = io(backendUrl + ':2083/'); //开启流
 
+    //开关控制弹幕
+    function toggleSocket() {
+        var toggleSwitch = document.getElementById('toggleSwitch');
+        var status = document.getElementById('status');
+
+        if (toggleSwitch.checked) {
+            // 打开连接
+            openSocket();
+            status.textContent = '打开';
+        } else {
+            // 关闭连接
+            closeSocket();
+            status.textContent = '关闭';
+        }
+    }
+
+    // 创建一个socket变量用于存储Socket.IO连接
+    let socket = null;
+
+    // 打开连接
+    function openSocket() {
+        if (!socket) {
+            socket = io(backendUrl + ':2083/');
+            console.log('Socket.IO连接已打开');
+        } else {
+            console.log('Socket.IO连接已经打开');
+        }
+    }
+
+    // 关闭连接
+    function closeSocket() {
+        if (socket) {
+            socket.disconnect();
+            socket = null;
+            console.log('Socket.IO连接已关闭');
+        } else {
+            console.log('Socket.IO连接已经关闭');
+        }
+    }
     console.log(socket.id); // x8WIv7-mJelg7on_ALbx
     socket.on('danmaku' + channel, (data) => {
         // 当遇到 danmaku 事件，就把推送来的弹幕推送给 CCL

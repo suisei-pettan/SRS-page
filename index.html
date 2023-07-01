@@ -178,6 +178,7 @@
     function openSocket() {
         if (!socket) {
             socket = io(backendUrl + ':2083/');
+            Socket();
             console.log('Socket.IO连接已打开');
         } else {
             console.log('Socket.IO连接已经打开');
@@ -194,21 +195,23 @@
             console.log('Socket.IO连接已经关闭');
         }
     }
+    function Socket(){
+        console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+        socket.on('danmaku' + channel, (data) => {
+            // 当遇到 danmaku 事件，就把推送来的弹幕推送给 CCL
+            var danmaku = JSON.parse(data);
+            console.log(data);
+            if (danmaku.hasOwnProperty('stime')) {
+                // 弹幕有时间轴位置，那就插入时间轴
+                CM.insert(danmaku);
+            } else {
+                // 弹幕没有时间轴位置就立刻显示（不记录）
+                CM.send(danmaku);
+            }
+            CM.start();
+        });
+    }
 
-    console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-    socket.on('danmaku' + channel, (data) => {
-        // 当遇到 danmaku 事件，就把推送来的弹幕推送给 CCL
-        var danmaku = JSON.parse(data);
-        console.log(data);
-        if (danmaku.hasOwnProperty('stime')) {
-            // 弹幕有时间轴位置，那就插入时间轴
-            CM.insert(danmaku);
-        } else {
-            // 弹幕没有时间轴位置就立刻显示（不记录）
-            CM.send(danmaku);
-        }
-        CM.start();
-    });
 
     $('#send-danmaku-btn').click(function () {
         //当按了发送弹幕的按钮

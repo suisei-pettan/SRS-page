@@ -154,7 +154,7 @@
     // Push notify example code
     // 基于 socket.io 和 JQuery来简化代码
 
-    const socket = io(backendUrl + ':2083/'); //开启流
+    let socket = io(backendUrl + ':2083/'); //开启流
 
     //开关控制弹幕
     function toggleSocket() {
@@ -194,6 +194,7 @@
             console.log('Socket.IO连接已经关闭');
         }
     }
+
     console.log(socket.id); // x8WIv7-mJelg7on_ALbx
     socket.on('danmaku' + channel, (data) => {
         // 当遇到 danmaku 事件，就把推送来的弹幕推送给 CCL

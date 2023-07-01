@@ -187,6 +187,7 @@
             socket = io(backendUrl + ':2083/');
             Socket();
             button.disabled = false;
+            button.textContent="发送弹幕"
             console.log('Socket.IO连接已打开');
         } else {
             console.log('Socket.IO连接已经打开');
@@ -201,8 +202,11 @@
             socket.disconnect();
             socket = null;
             button.disabled = true;
+            button.textContent="弹幕关闭"
             console.log('Socket.IO连接已关闭');
         } else {
+            button.disabled = true;
+            button.textContent="弹幕关闭"
             console.log('Socket.IO连接已经关闭');
         }
     }

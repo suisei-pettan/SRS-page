@@ -87,7 +87,15 @@
             <input type="checkbox" id="toggleSwitch" checked onchange="toggleSocket()">
             <span class="slider"></span>
         </label>
-        <span class="switch-label">连接状态: <span id="status">打开</span></span>
+        <span class="switch-label" style="display: block;
+        text-align: center;
+        margin: 10px;
+        color: #ccccff;
+        text-decoration: none;">弹幕状态: <span id="status" style="display: block;
+        text-align: center;
+        margin: 10px;
+        color: #ccccff;
+        text-decoration: none;">打开</span></span>
     </div>
 </div>
 <a href="https://www.wjx.cn/vm/mznTzz0.aspx">
@@ -155,6 +163,7 @@
     // 基于 socket.io 和 JQuery来简化代码
 
     let socket = io(backendUrl + ':2083/'); //开启流
+    var button = document.getElementById('send-danmaku-btn');
 
     //开关控制弹幕
     function toggleSocket() {
@@ -179,6 +188,7 @@
         if (!socket) {
             socket = io(backendUrl + ':2083/');
             Socket();
+            button.disabled = false;
             console.log('Socket.IO连接已打开');
         } else {
             console.log('Socket.IO连接已经打开');
@@ -192,6 +202,7 @@
         if (socket) {
             socket.disconnect();
             socket = null;
+            button.disabled = true;
             console.log('Socket.IO连接已关闭');
         } else {
             console.log('Socket.IO连接已经关闭');

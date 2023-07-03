@@ -223,6 +223,12 @@
         });
     }
 
+    //全屏时重新初始化弹幕位置
+    var fullscreenBtn = document.querySelector('.prism-fullscreen-btn');
+
+    fullscreenBtn.addEventListener('click', function () {
+        CM.init();
+    });
 
     $('#send-danmaku-btn').click(function () {
         //当按了发送弹幕的按钮

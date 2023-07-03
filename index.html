@@ -247,10 +247,16 @@
     const element = document.getElementById("my-comment-stage");
     if (element.requestFullscreen) {
         element.requestFullscreen();
+        var element = document.getElementById("my-comment-stage");
+        element.innerHTML = element.innerHTML;
     } else if (element.webkitRequestFullscreen) { /* Safari */
         element.webkitRequestFullscreen();
+        var element = document.getElementById("my-comment-stage");
+        element.innerHTML = element.innerHTML;
     } else if (element.msRequestFullscreen) { /* IE11 */
         element.msRequestFullscreen();
+        var element = document.getElementById("my-comment-stage");
+        element.innerHTML = element.innerHTML;
     }
     //点击时显示发送弹幕10秒
     $("#danmaku_send").hide();

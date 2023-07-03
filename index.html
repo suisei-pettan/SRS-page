@@ -97,18 +97,13 @@
     </div>
 </div>
 <a>
-    嗨，我是转播man，这是我的转播神器，cloudflare是我的秘密武器，开播5秒钟，DD两小时。嘘，不要告诉别人哦
+    如遇严重卡顿，请使用代理，并将Match规则（部分配置文件显示为 漏网之鱼 ）设置为走代理
 </a>
 <a style="color:red;font-weight:bold;">
     如显示手机不支持，请使用 电脑版页面/查看桌面网站。
 </a>
 <br/>
 <a>已知ipv6有卡顿现象，请避免在开启ipv6的情况下观看。部分校园网可能会劫持DNS阻碍访问，请打开安全DNS解决</a>
-<br/>
-
-<a>
-    过来人劝你不要在b站看v，会变得不幸
-</a>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js">
 </script>
@@ -187,7 +182,7 @@
             socket = io(backendUrl + ':2083/');
             Socket();
             button.disabled = false;
-            button.textContent="发送弹幕"
+            button.textContent = "发送弹幕"
             console.log('Socket.IO连接已打开');
         } else {
             console.log('Socket.IO连接已经打开');
@@ -202,11 +197,11 @@
             socket.disconnect();
             socket = null;
             button.disabled = true;
-            button.textContent="弹幕关闭"
+            button.textContent = "弹幕关闭"
             console.log('Socket.IO连接已关闭');
         } else {
             button.disabled = true;
-            button.textContent="弹幕关闭"
+            button.textContent = "弹幕关闭"
             console.log('Socket.IO连接已经关闭');
         }
     }

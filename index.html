@@ -227,9 +227,11 @@
     var fullscreenBtn = document.querySelector('.prism-fullscreen-btn');
 
     fullscreenBtn.addEventListener('click', function () {
-        console.log("全屏")
-        CM = new CommentManager(document.getElementById('my-comment-stage'));
-        CM.init();
+        console.log("全屏");
+        setTimeout(function () {
+            CM = new CommentManager(document.getElementById('my-comment-stage'));
+            CM.init();
+        }, 500);
     });
 
     $('#send-danmaku-btn').click(function () {

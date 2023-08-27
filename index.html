@@ -295,7 +295,8 @@
                 var fileContent = xhr.responseText;
                 var fullContent = "后端服务器信息：" + fileContent; // 添加前缀
                 var link = document.getElementById(elementId);
-                link.href = "data:text/plain;charset=utf-8," + encodeURIComponent(fullContent);
+                link.innerText = fullContent;
+                // link.href = "data:text/plain;charset=utf-8," + encodeURIComponent(fullContent);
             }
         };
         xhr.send();

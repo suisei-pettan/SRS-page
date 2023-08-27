@@ -96,6 +96,7 @@
         text-decoration: none;">打开</span></span>
     </div>
 </div>
+<a id="contentLink"></a>
 <a>
     如遇严重卡顿，请使用代理，并将Match规则（部分配置文件显示为 漏网之鱼 ）设置为走代理
 </a>
@@ -120,7 +121,7 @@
     // 存储后端地址到变量中
     if (backendUrl) {
         // 如果参数存在，则将其存储到变量中
-        myUrl = backendUrl + "/live/live/homo";
+        myUrl = backendUrl + "/live/homo";
     } else {
         alert("后端为空,请检查url参数是否完整");
     }
@@ -134,7 +135,7 @@
     const channel = getUrlParam('channel');
     var player = new Aliplayer({
         "id": "playercon",
-        "source": myUrl + channel + ".flv",
+        "source": myUrl + channel + ".m3u8",
         "width": "100%",
         "height": "500px",
         "autoplay": true,
@@ -284,5 +285,23 @@
             }, 10000);
         }
     });
+</script>
+<script type="text/javascript">
+    function fetchAndDisplayContent(url, elementId) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var fileContent = xhr.responseText;
+                var fullContent = "后端服务器信息：" + fileContent; // 添加前缀
+                var link = document.getElementById(elementId);
+                link.href = "data:text/plain;charset=utf-8," + encodeURIComponent(fullContent);
+            }
+        };
+        xhr.send();
+    }
+
+    fetchAndDisplayContent(backendUrl + "/information.txt", "contentLink");
+
 </script>
 </body>

@@ -10,7 +10,7 @@ def main():
     ytdl_patched_output = subprocess.check_output(f"yt-dlp -g {youtube_url}", shell=True)
     source_live = ytdl_patched_output.decode().strip()
     # 执行 ffmpeg -loglevel quiet -i 源直播 -c:v copy -strict -2 -f flv rtmp://127.0.0.1/live/homo频道号.flv
-    ffmpeg_command = f"ffmpeg -loglevel quiet -i {source_live} -c:v copy -strict -2 -f flv rtmp://127.0.0.1/live/homo{channel_number}.flv"
+    ffmpeg_command = f"ffmpeg -re -loglevel quiet -i {source_live} -c:v copy -strict -2 -f flv rtmp://127.0.0.1/live/homo{channel_number}.flv"
     subprocess.run(ffmpeg_command, shell=True)
 
 if __name__ == "__main__":
